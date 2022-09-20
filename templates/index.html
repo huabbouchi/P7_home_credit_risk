@@ -17,18 +17,18 @@
   <img src="pret_logo.png" alt="Prêt à dépenser" width="50" height="50">    
 
 
- <div class="login">
- 	<h1>Home Credit Default Risk</h1>
+  <div class="login">
+    <h1>Home Credit Default Risk</h1>
 
-     <!-- Main Input For Receiving Query to our ML -->
+    <!-- Main Input For Receiving Query to our ML -->
     <form action="{{ url_for('predict')}}"method="post">
 
       <input type="text" name="id_client" placeholder="id_client" required="required" value="{{ request.form['id_client'] }}"/>
-        <button type="submit" class="btn btn-primary btn-block btn-large">Predict</button>
+      <button type="submit" class="btn btn-primary btn-block btn-large">Predict</button>
     </form>
 
-   <br>
-   <br>
+  <br>
+  <br>
    {{ prediction_text }}
 
  </div>
