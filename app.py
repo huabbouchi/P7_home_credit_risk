@@ -28,7 +28,7 @@ def predict():
     all_id_client = list(dataframe['SK_ID_CURR'].unique())
 
     model = pickle.load(open('LGBMClassifier_auc_score.pkl', 'rb'))
-    seuil = 0.5
+    seuil = 0.45
 
     ID = request.form['id_client']
     ID = int(ID)
