@@ -23,8 +23,8 @@ def predict():
     For rendering results on HTML GUI
     '''
 
-    z = ZipFile("df_competition_1.zip")
-    dataframe = pd.read_csv(z.open('df_competition_1.csv'), encoding ='utf-8')
+    z = ZipFile("X_dashboard.zip")
+    dataframe = pd.read_csv(z.open('X_dashboard.csv'), encoding ='utf-8')
     all_id_client = list(dataframe['SK_ID_CURR'].unique())
 
     model = pickle.load(open('LGBMClassifier_auc_score.pkl', 'rb'))
