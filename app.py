@@ -13,44 +13,49 @@ from lightgbm import LGBMClassifier
 app= Flask(__name__)
 @app.route('/')
 def home():
-    return render_template('index.html')
-
-
-@app.route('/predict', methods = ['POST'])
-
-def predict():
-    '''
-    For rendering results on HTML GUI
-    '''
-
     z = ZipFile("X_dashboard.zip")
     dataframe = pd.read_csv(z.open('X_dashboard.csv'), encoding ='utf-8')
     all_id_client = list(dataframe['SK_ID_CURR'].unique())
 
+    return render_template('index.html', customers=all_id_client)
+
+
+
+
+@app.route('/predict', methods=['POST', 'GET'])
+def predict():
+    z = ZipFile("X_dashboard.zip")
+    dataframe = pd.read_csv(z.open('X_dashboard.csv'), encoding ='utf-8')
+    all_id_client = list(dataframe['SK_ID_CURR'].unique())
+    prediction = 'please select a customer ID'
+
     model = pickle.load(open('LGBMClassifier_auc_score.pkl', 'rb'))
     seuil = 0.45
+    ID = request.form.get('customer_select')
+    if ID == '':
+        pass
+    else:
 
-    ID = request.form['id_client']
-    ID = int(ID)
-    if ID not in all_id_client:
-        prediction="This customer doesn't exist"
-    else :
+        ID = int(ID)
+
         X = dataframe[dataframe['SK_ID_CURR'] == ID]
         X = X.drop(['SK_ID_CURR'], axis=1)
 
         #data = df[df.index == comment]
         probability_default_payment = model.predict_proba(X)[:, 1]
         if probability_default_payment >= seuil:
-            prediction = "Credit Not Accorded"
+            prediction = "Credit Not Accorded for customer: "
         else:
-            prediction = "Credit Accorded"
+            prediction = "Credit Accorded for customer: "
 
-    return render_template('index.html', prediction_text=prediction)
+
+    return render_template('index.html', customers=all_id_client, prediction_text=prediction, client_id=ID)
 
 # Define endpoint for flask
 app.add_url_rule('/predict', 'predict', predict)
 
+
 # Run app.
 # Note : comment this line if you want to deploy on heroku
 #app.run()
-#app.run(debug=True)
+# app.run(debug=True)
