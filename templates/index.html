@@ -13,10 +13,12 @@
 </head>
 
 <body>
-
+  <div class="image">
+    
+  </div>
+  <br>
   <div class="login">
-
-    <img src="{{url_for('static', filename='pret_logo.png')}}">
+    <img src="static/pret_logo.png">
     <br>
     <h1>Home Credit Default Risk</h1>
     <br>
@@ -30,17 +32,8 @@
       </select>
       <button type="submit" class="btn btn-primary btn-block btn-large">Predict</button>
     </form>
-
-
-<!-- Main Input For Receiving Query to our ML -->
-
+  <!-- Main Input For Receiving Query to our ML -->
   {{prediction_text}}{{client_id}}
-   
-
-
-
- </div>
-
-
+  </div>
 </body>
 </html>
